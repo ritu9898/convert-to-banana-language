@@ -14,18 +14,19 @@ $(document).on('click', '.btn', function(){
       return false;
     }
 
-    $.ajax({
-      url: 'https://api.funtranslations.com/translate/minion.json',
-      method: 'GET',
-      data: {"text": input},
-      success: function(response) {
-        console.log(response);
-        $("#convertedText").html(response.contents.translated);
-      },
-      error: function(response){
-        console.log(response);
-        $("#convertedText").html("Error!");
-      }
+    let url = 'https://api.funtranslations.com/translate/minion.json?text='+input;
+
+    fetch(url)
+    .then(response => 
+      // console.log(response);
+      response.json())
+    .then(function(data){
+      $("#convertedText").html(data.contents.translated);
+      })
+    .catch(function(error){ 
+      console.error();
+      $("#convertedText").html('Error');
     });
   }
+
 });
